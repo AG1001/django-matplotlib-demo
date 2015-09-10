@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% load staticfiles %}
+    <title>Oil Price Predictions</title>
+  </head>
+  <body>
+    <h1><a href="/"> Oil Price Predictions</a></h1>
+    <form action='/forecast/predict/' method="POST">
+      Choose region:<br/>
+      <input type="radio" name="region" value="WTI" {% ifequal region "WTI" %}checked{% endifequal %}>WTI<br/>
+      <input type="radio" name="region" value="Brent" {% ifequal region "Brent" %}checked{% endifequal %}>Brent<br/>
+
+      Choose number of months to forecast:<br/>
+      <input type="radio" name="months" value="3" {% ifequal months "3" %}checked{% endifequal %}>3<br/>
+      <input type="radio" name="months" value="6" {% ifequal months "6" %}checked{% endifequal %}>6<br/>
+      <input type="submit" value="Predict!" />
+      {% csrf_token %}
+    </form>
+
+    {% if plot_img %}
+      <br/>
+      <img src='{% url "plot_img" region months %}' />
+    {% endif %}
+
+  </body>
+</html>
+
+
+
